@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block main %}
+<div class="row">
+    <div class="col">
+        <h2> UPDATE MENSALISTAS: {{mensalista}}</h2>
+
+        <form action="{% url 'core_mensalista_update' id=mensalista.id %}" method="POST">
+            {%csrf_token %}
+            {{form|bootstrap}} 
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a href="{% url 'core_mensalista_delete' mensalista.id %}" class="btn btn-danger">Deletar</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

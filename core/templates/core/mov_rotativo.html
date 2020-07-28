@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block menu %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'core_home' %}">Home</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Serviços</a>
+        <div class="dropdown-menu">
+        <a class="dropdown-item" href="{% url 'core_lista_pessoas' %}">Pessoas</a>
+        <a class="dropdown-item" href="{% url 'core_lista_veiculos' %}">Veiculos</a>
+        <a class="dropdown-item active" href="{% url 'core_lista_mov_rot' %}">Movimeto Rotativo</a>
+        <a class="dropdown-item" href="{% url 'core_lista_mensalista' %}">Mensalistas</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Logout</a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled (link desabilitado)</a> 
+    </li>
+</ul>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col">
+        <h2>Cadastro movimento rotativo</h2>
+        <form action="{% url 'core_novo_mov_rot'%}" method="POST">
+        {%csrf_token %}
+            {{form|bootstrap}} 
+
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+    <div class="col">
+        <h2>Movimento Rotativo</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">VEÍCULO</th>
+                <th scope="col">CHEKIN</th>
+                <th scope="col">CHEKOUT</th>
+                <th scope="col">T. HORAS</th>
+                <th scope="col">T. R$</th>
+                <th scope="col">STATUS/$</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for mov in mov_rot %}
+                <tr>
+                <th scope="row">{{mov.id}}</th>
+                <td>{{mov.chekin}}</td>
+                <td>{{mov.chekout}}</td>
+                <td>{{mov.horas_total}}</td>
+                <td>{{mov.veiculo}}</td>
+                <td>{{mov.total}}</td>
+                <td>{{mov.situacao}}</td>
+                </tr>
+                <tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+{% block main %}
+<div class="row">
+    <div class="col">
+        <h2>lista de movimento mensalista</h2>
+    </div>
+</div>
+<div class="row">
+    <div class=".col-sm-6">
+        <form action="{% url 'core_mov_mensalista_novo'%}" method="POST">
+            {%csrf_token %}
+            {{form|bootstrap}} 
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+    <div class=".col-sm-6">
+        <ul>
+        {%for mov in mov_mens%}
+            <li>
+            <a href="{% url 'core_mov_mensalista_update' mov.id %}">{{mov.mensalista}} - {{mov.dt_pgt}} - {{mov.total}}</a>    
+            </li>
+        {%endfor%}
+        </ul>
+    </div>
+</div>
+{% endblock %}

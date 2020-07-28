@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% load bootstrap %}
+
+
+{% block menu %}
+<ul class="nav nav-tabs">
+    <li class="nav-item">
+        <a class="nav-link" href="{% url 'core_home' %}">Home</a>
+    </li>
+    <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle active" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Serviços</a>
+        <div class="dropdown-menu">
+        <a class="dropdown-item active" href="{% url 'core_lista_pessoas' %}">Pessoas</a>
+        <a class="dropdown-item" href="{% url 'core_lista_veiculos' %}">Veiculos</a>
+        <a class="dropdown-item" href="{% url 'core_lista_mov_rot' %}">Movimeto Rotativo</a>
+        <a class="dropdown-item" href="{% url 'core_lista_mensalista' %}">Mensalistas</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Logout</a>
+        </div>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="#">Link</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled (link desabilitado)</a> 
+    </li>
+</ul>
+{% endblock %}
+
+{% block main %}
+<div class="row">
+    <div class="col">
+    <h2>Preencha o cadastro</h2>
+        <form action="{% url 'core_nova_pessoa'%}" method="POST">
+            {%csrf_token %}
+            {{form|bootstrap}} 
+            <button type="submit" class="btn btn-primary">Cadastrar</button>
+        </form>
+    </div>
+
+    <div class="col">
+    <h2>Listagem de pessoas</h2>
+        <table class="table">
+            <thead class="thead-dark">
+                <tr>
+                <th scope="col">ID</th>
+                <th scope="col">NOME</th>
+                <th scope="col">ENDEREÇO</th>
+                <th scope="col">TELEFONE</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for pessoa in pessoas %}
+                <tr>
+                <th scope="row">{{pessoa.id}}</th>
+                <td>{{pessoa.nome}}</td>
+                <td>{{pessoa.endereco}}</td>
+                <td>{{pessoa.telefone}}</td>
+                </tr>
+                <tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>    
+{% endblock %}
